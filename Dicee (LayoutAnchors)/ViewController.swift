@@ -29,16 +29,33 @@ class ViewController: UIViewController {
         
         applyStyle()
         applyLayout()
+        actionButton()
+    }
+    
+    func actionButton() {
+        rollButton.addTarget(self, action: #selector(buttonTapped), for: .primaryActionTriggered)
+        
+    }
+    
+    @objc private func buttonTapped() {
+        leftDicee.image = #imageLiteral(resourceName: "DiceFour")
+        rightDicee.image = #imageLiteral(resourceName: "DiceFour")
     }
     
     func applyStyle() {
-        backgroundImageView.image = UIImage(named: "GreenBackground")
-        diceeLogo.image = UIImage(named: "DiceeLogo")
+        backgroundImageView.image = #imageLiteral(resourceName: "GreenBackground")
         
+        verticalStackView.contentMode = .scaleToFill
+        print(verticalStackView.contentMode)
+        
+        diceeLogo.image = #imageLiteral(resourceName: "DiceeLogo")
         applyStyleButton(rollButton)
         
-        leftDicee.image = UIImage(named: "DiceSix")
-        rightDicee.image = UIImage(named: "DiceOne")
+        applyStyleDicee([
+            leftDicee,
+            rightDicee
+        ])
+        
     }
     
     func applyLayout() {
@@ -66,7 +83,8 @@ class ViewController: UIViewController {
                 viewTrailing
             ],
             axis: .horizontal,
-            distribution: .equalCentering
+            distribution: .equalCentering,
+            alignment: .center
         )
         
         [backgroundImageView, verticalStackView, horizontalStackView].forEach() { item in
@@ -80,7 +98,8 @@ class ViewController: UIViewController {
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            verticalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            verticalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            verticalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             verticalStackView.topAnchor.constraint(equalTo: view.topAnchor),
             verticalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
@@ -118,7 +137,7 @@ class ViewController: UIViewController {
         spacing: CGFloat = 0,
         axis: NSLayoutConstraint.Axis = .vertical,
         distribution: UIStackView.Distribution = .fillEqually,
-        alignment: UIStackView.Alignment = .center
+        alignment: UIStackView.Alignment = .fill
     ){
         stackView.axis = axis
         stackView.spacing = spacing
@@ -131,22 +150,13 @@ class ViewController: UIViewController {
         }
     }
     
-    func applyStyleLabel(
-        _ label: UILabel,
-        text: String = "I Am Rich",
-        font: UIFont? = UIFont(name: "Helvetica Neue", size: 40),
-        textColor: UIColor = .white
-    ){
-        label.text = text
-        label.font = font
-        label.textColor = textColor
-    }
-    
-    func applyStyleImageView(
-        _ imageView: UIImageView,
+    func applyStyleDicee(
+        _ imageView: [UIImageView],
         image: UIImage? = UIImage(named: "diamond")
     ){
-        imageView.image = image
+        imageView.forEach { item in
+            item.image = #imageLiteral(resourceName: "DiceOne")
+        }
     }
     
     func applyStyleButton(_ button: UIButton) {
