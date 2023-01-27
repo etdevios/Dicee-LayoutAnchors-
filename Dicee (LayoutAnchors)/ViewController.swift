@@ -8,6 +8,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    private let diceArray = [#imageLiteral(resourceName: "DiceOne"), #imageLiteral(resourceName: "DiceTwo"), #imageLiteral(resourceName: "DiceThree"), #imageLiteral(resourceName: "DiceFour"), #imageLiteral(resourceName: "DiceFive"), #imageLiteral(resourceName: "DiceSix")]
+    
     private let backgroundImageView = UIImageView()
     
     private let verticalStackView = UIStackView()
@@ -38,8 +40,8 @@ class ViewController: UIViewController {
     }
     
     @objc private func buttonTapped() {
-        leftDicee.image = #imageLiteral(resourceName: "DiceFour")
-        rightDicee.image = #imageLiteral(resourceName: "DiceFour")
+        leftDicee.image = diceArray.randomElement()
+        rightDicee.image = diceArray.randomElement()
     }
     
     func applyStyle() {
@@ -155,7 +157,7 @@ class ViewController: UIViewController {
         image: UIImage? = UIImage(named: "diamond")
     ){
         imageView.forEach { item in
-            item.image = #imageLiteral(resourceName: "DiceOne")
+            item.image = diceArray.randomElement()
         }
     }
     
